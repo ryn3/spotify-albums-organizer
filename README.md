@@ -1,6 +1,6 @@
 # Saved Spotify Albums Organizer
 
-![GUI example](https://raw.githubusercontent.com/savoy1211/spotify-albums-organizer/master/display_covers.png?token=AGCPCLMX5HGO3O5B23JJ7WK5JHL5C)
+![GUI example](https://raw.githubusercontent.com/savoy1211/spotify-albums-organizer/master/display_covers.png?token=AGCPCLPE5OMGUKEICAQGLNC5JIGSU)
 
 This app lets you organize and visualize your saved Spotify albums. You can sort by genre, year, date added, etc.
 
@@ -18,6 +18,8 @@ The Mongo database uses localhost: 27017
 * Collections: **current_albums** (saved Spotify albums) **current_masters** (Discogs masters). 
 
 ## Dependencies
+
+	$ pip install -r REQUIREMENTS
 
 ## Usage
 
