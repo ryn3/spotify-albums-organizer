@@ -3,7 +3,6 @@
 Import your saved albums from Spotify and the monthly Discogs masters data -- ~1.5GB -- into MongoDB. Since Spotify data lacks information about genre and subgenres (styles), discogs-spotify-import retrieves genre and subgenre data from the Discogs library and updates the Spotify data. 
 
 **This app hasn't been tested on Python 2.x**
-Python 3.x should work.
 
 Download MongoDB if needed from <https://www.mongodb.com/download-center/community>
 
