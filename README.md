@@ -7,9 +7,9 @@ Since Spotify data lacks information about genre and subgenres (styles), discogs
 ## Specifications
 The Mongo database uses localhost: 27017
 
-*Database name: **discogs_masters** 
+* Database name: **discogs_masters** 
 
-*Collections: **current_albums** (saved Spotify albums) **current_masters** (Discogs masters). 
+* Collections: **current_albums** (saved Spotify albums) **current_masters** (Discogs masters). 
 
 ## 1. Import album data:
 	$ chmod +x run.sh
