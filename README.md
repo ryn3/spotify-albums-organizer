@@ -4,8 +4,8 @@ The Mongo database (localhost: 27017) is "discogs_masters" and the collections a
 
 Use these commands to get started:
 
-	chmod +x run.sh
-	./run.sh <spotify-id> <discogs-masters-xml-file>
+	$ chmod +x run.sh
+	$ ./run.sh <spotify-id> <discogs-masters-xml-file>
 
 (You can find your Spotify id on your browser's tab when you go to https://open.spotify.com/settings/account)
 *This will take some time depending on the number of saved Spotify albums. On my 2015 MacBook Air, importing Discogs data, ~600 saved albums, and cross-referencing genre and style data took roughly an hour. 
