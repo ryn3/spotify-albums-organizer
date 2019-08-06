@@ -1,0 +1,1 @@
+mongoexport --host localhost:27017 --db discogs_masters --collection current_albums_recent_2019 --csv --out text.csv --fields items.album.artists[0].name,items.album.name,items.album.label,items.album.release_year,items.album.genres

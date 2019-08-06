@@ -1,0 +1,421 @@
+
+mongoimport -d spotipy_saved_albums -c albums_export_test album_data0.json
+mongoimport -d spotipy_saved_albums -c albums_export_test album_data1.json
+mongoimport -d spotipy_saved_albums -c albums_export_test album_data2.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data3.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data4.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data5.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data6.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data7.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data8.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data9.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data10.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data11.json
+mongoimport -d spotipy_saved_albums -c albums_export album_data12.json
+
+
+---------------
+===AGGREGATE===
+---------------
+var docs = db.albums_export_test.aggregate([{$unwind: {path: "$items"}}, {$project: {"_id": 0}}])
+db.albums_export_dump.insert(docs.toArray())
+
+var artist = "The Soul Searchers"
+var album  = "Salt of the Earth"
+
+//returns label
+db.albums_export_test_dump.findOne({"items.album.artists": {$elemMatch: {"name": {$regex: artist}}}, "items.album.name": {$regex: album }}, {"items.album.label":1})
+
+
+------------------------------
+=======Document Fields========
+------------------------------
+var doc = db.albums_export_test_dump.findOne({"items.album.artists": {$elemMatch: {"name": {$regex: artist}}}, "items.album.name": {$regex: album }})
+----------------------------											
+
+//artists
+var artists = []
+doc.items.album.artists.forEach(function(artist){
+	artists.push(artist.name)
+})
+
+doc.items.added_at
+doc.items.album.artists[0].name
+doc.items.album.name
+doc.items.album.release_date
+doc.items.album.external_url.spotify
+doc.items.album.genres (EMPTY)
+doc.items.album.styles (EMPTY)
+
+
+------------------------	----------------------------	----------------------------	----------------------------	
+=======PSEUDOCODE=======
+------------------------
+iterate through each "spotipy_saved_albums" document
+	get document (artists, album_title)
+	query (artists, album_title) in "discogs_masters"
+		get document (genres, styles)
+	set document (genres, styles)
+
+----------------------------
+=======MONGO SCRIPT 1=======
+----------------------------
+use discogs_masters;
+db.albums_export_dump.find().forEach(function(document){
+	var artist = document.items.album.artists[0].name;
+	var album  = document.items.album.name;
+	var discogs_doc = db.all_masters_final.findOne({"masters.master.artists.artist.name":  {$regex: artist}, "masters.master.title": {$regex: album}});
+	if (discogs_doc != null) {
+		var genres = discogs_doc.masters.master.genres.genre;
+		var styles = discogs_doc.masters.master.styles.style;
+		var year   = discogs_doc.masters.master.year;
+		document.items.album.genres = genres;
+		document.items.album.styles = styles;
+		document.items.album.release_year = year;
+	} else {
+		print(album + " by " + artist + " was null")
+	}
+	
+})
+	:::::::::::::::::::::::::::
+	::::::::NULL VALUES::::::::
+	:::::::::::::::::::::::::::
+
+		"A I A: Alien Observer by Grouper was null"
+		"velocity:design:comfort. by Sweet Trip was null"
+		"E s t a r a by Teebs was null"
+		"These Sunny Days by Devilish Dear was null"
+		"Snaxx by Mndsgn was null"
+		"Girl With Basket Of Fruit by Xiu Xiu was null"
+		"The Tired Sounds of Stars of the Lid by Stars Of The Lid was null"
+		"Atomizer (Remastered) by Big Black was null"
+		"...And as We Have Seen the Storm, We Have Embraced the Eye by Chapel Of Disease was null"
+		"BEAT MUSIC! BEAT MUSIC! BEAT MUSIC! by Mark Guiliana was null"
+		"R F Y by Amai was null"
+		"Bird by Bun / Fumitake Tamura was null"
+		"Drop the Vowels by Millie & Andrea was null"
+		"Reinforced presents 4hero - Parallel Universe by Mark Clair, Dennis McFarlane was nu"ll
+		"Kirlian Selections by The Flashbulb was null"
+		"If You're Into It I'm Out of It by Christoph De Babalon was null"
+		"R F Y by Amai was null"
+		"HEIZE by HEIZE was null"
+		"/// (너 먹구름 비) by HEIZE was null"
+		"Wish & Wind by HEIZE was null"
+		"She's Fine by HEIZE was null"
+		"And July by HEIZE was null"
+		"Tears of Joy by MIKE was null"
+		"Salt of the Earth by The Soul Searchers was null"
+		"Complete Expressions, Vol. 2 by Hysear Don Walker was null"
+		"The Freedom Book [RVG Remaster] by Booker Ervin was null"
+		"Change Of Pace (Riverside Limited, Remastered Version) by Johnny Griffin was null"
+		"asect:dsect by Richard Devine was null"
+		"There's a Riot Goin' On by Sly & The Family Stone was null"
+		"Curtis! (Deluxe Edition) by Curtis Mayfield was null"
+		"Jazzmatazz Volume 1 by Guru was null"
+		"Standthis by Dakim was null"
+		"Scelsi: Natura Renovatur by Giacinto Scelsi was null"
+		"Moa Anbessa by Getatchew Mekurya was null"
+		"Conference Of The Birds by Dave Holland Quartet was null"
+		"Point Of Departure (The Rudy Van Gelder Edition) by Andrew Hill was null"
+
+
+db.albums_export_dump.find().forEach(function(d){ db.getSiblingDB('discogs_masters')['albums_export_dump'].insert(d); });
+
+
+----------------------------
+=======MONGO SCRIPT 2=======
+----------------------------
+use discogs_masters;
+db.albums_export_dump.find().forEach(function(document){
+	var artist = document.items.album.artists[0].name;
+	var album  = document.items.album.name;
+	var discogs_doc = db.all_masters_final.findOne({"masters.master.artists.artist.name":  {$regex: artist, $options: "i" }, "masters.master.title": {$regex: album, $options: "i" }});
+	if (discogs_doc != null) {
+		if (typeof discogs_doc.masters.master.styles !== "undefined" && typeof discogs_doc.masters.master.genres !== "undefined"){
+			var genres = discogs_doc.masters.master.genres.genre;
+			var styles = discogs_doc.masters.master.styles.style;
+			document.items.album.genres = genres;
+			document.items.album.styles = styles;
+		}
+		var year   = discogs_doc.masters.master.year;
+		document.items.album.release_year = year;
+	} else {
+		print(album + " by " + artist + " was null");
+	}
+})
+
+	:::::::::::::::::::::::::::
+	::::::::NULL VALUES::::::::
+	:::::::::::::::::::::::::::
+
+		"A I A: Alien Observer by Grouper was null"
+		"velocity:design:comfort. by Sweet Trip was null"
+		"E s t a r a by Teebs was null"
+		"These Sunny Days by Devilish Dear was null"
+		"Atomizer (Remastered) by Big Black was null"
+		"R F Y by Amai was null"
+		"Bird by Bun / Fumitake Tamura was null"
+		"Drop the Vowels by Millie & Andrea was null"
+		"Reinforced presents 4hero - Parallel Universe by Mark Clair, Dennis McFarlane was null"
+		"Kirlian Selections by The Flashbulb was null"
+		"If You're Into It I'm Out of It by Christoph De Babalon was null"
+		"R F Y by Amai was null"
+		"HEIZE by HEIZE was null"
+		"/// (너 먹구름 비) by HEIZE was null"
+		"Wish & Wind by HEIZE was null"
+		"She's Fine by HEIZE was null"
+		"Tears of Joy by MIKE was null"
+		"Complete Expressions, Vol. 2 by Hysear Don Walker was null"
+		"The Freedom Book [RVG Remaster] by Booker Ervin was null"
+		"Change Of Pace (Riverside Limited, Remastered Version) by Johnny Griffin was null"
+		"Curtis! (Deluxe Edition) by Curtis Mayfield was null"
+		"Jazzmatazz Volume 1 by Guru was null"
+		"Standthis by Dakim was null"
+		"Scelsi: Natura Renovatur by Giacinto Scelsi was null"
+		"Moa Anbessa by Getatchew Mekurya was null"
+		"Conference Of The Birds by Dave Holland Quartet was null"
+		"Point Of Departure (The Rudy Van Gelder Edition) by Andrew Hill was null"
+		"Astigmatic (Polish Jazz) by Komeda Quintet was null"
+		"ZUU by Denzel Curry was null"
+		"Beat Konducta Vol. 5-6: Dil Cosby & Dil Withers Suite by Madlib was null"
+		"KingMaker by Joel Ross was null"
+	===============================
+	=========ERROR MESSAGE=========
+	===============================
+		2019-07-31T23:30:00.543-0700 E QUERY    [js] Error: getMore command failed: {
+			"ok" : 0,
+			"errmsg" : "cursor id 213540571415 not found",
+			"code" : 43,
+			"codeName" : "CursorNotFound"
+		} :
+		_getErrorWithCode@src/mongo/shell/utils.js:25:13
+		DBCommandCursor.prototype._runGetMoreCommand@src/mongo/shell/query.js:800:1
+		DBCommandCursor.prototype._hasNextUsingCommands@src/mongo/shell/query.js:828:9
+		DBCommandCursor.prototype.hasNext@src/mongo/shell/query.js:836:1
+		DBQuery.prototype.hasNext@src/mongo/shell/query.js:294:13
+		DBQuery.prototype.forEach@src/mongo/shell/query.js:500:12
+		@(shell):1:1
+
+----------------------------
+=======MONGO SCRIPT 3=======
+----------------------------
+use discogs_masters;
+db.albums_export_dump.find().forEach(function(document){
+	if (document.items.album.genres.length == 0) {
+		var id = document._id
+		var artist = document.items.album.artists[0].name;
+		var album  = document.items.album.name;
+		if (album.length >= 5){
+			album = album.substring(0,5)
+		}
+		
+		var discogs_doc = db.all_masters_final.findOne({"masters.master.artists.artist.name":  {$regex: artist, $options: "i" }, "masters.master.title": {$regex: album, $options: "i" }});
+		if (discogs_doc != null) {
+			if (typeof discogs_doc.masters.master.styles !== "undefined" && typeof discogs_doc.masters.master.genres !== "undefined"){
+				var genres = discogs_doc.masters.master.genres.genre;
+				var styles = discogs_doc.masters.master.styles.style;
+				document.items.album.genres = genres;
+				document.items.album.styles = styles;
+			}
+			var year   = discogs_doc.masters.master.year;
+			document.items.album.release_year = year;
+			db.albums_export_dump.update( {"_id": id}  , document)
+		} else {
+			print(album + " by " + artist + " was null");
+		}
+
+	}
+})
+	
+	:::::::::::::::::::::::::::
+	::::::::NULL VALUES::::::::
+	:::::::::::::::::::::::::::   121/643, 18.81% error
+
+		"E s t by Teebs was null"
+		"These by Devilish Dear was null"
+		"R F Y by Amai was null"
+		"Bird by Bun / Fumitake Tamura was null"
+		"Drop  by Millie & Andrea was null"
+		"Reinf by Mark Clair, Dennis McFarlane was null"
+		"Kirli by The Flashbulb was null"
+		"R F Y by Amai was null"
+		"HEIZE by HEIZE was null"
+		"/// ( by HEIZE was null"
+		"Wish  by HEIZE was null"
+		"She's by HEIZE was null"
+		"Stand by Dakim was null"
+		"Moa A by Getatchew Mekurya was null"
+		"Confe by Dave Holland Quartet was null"
+		"ZUU by Denzel Curry was null"
+		"KingM by Joel Ross was null"
+		"Dream by Frequent was null"
+		"加爾基 精 by Sheena Ringo was null"
+		"골든 15 by Lee Moon Sae was null"
+		"OST V by Bernard Herrmann was null"
+		"Crumb by Mid-Air Thief was null"
+		"None  by DJ Rozwell was null"
+		"Club  by Milton Nascimento was null"
+		"Melkw by Jameszoo was null"
+		"Artif by Various Artists was null"
+		"Quiqu by Seefeel was null"
+		"FLANC by Flanch was null"
+		"Rott: by Hans Rott was null"
+		"Béla  by Kim Kashkashian was null"
+		"Bárto by Béla Bartók was null"
+		"Indet by John Cage and David Tudor was null"
+		"Monol by Sunn 0))) was null"
+		"Life  by Sunn 0))) was null"
+		"Artif by Various Artists was null"
+		"A Qui by Slauson Malone was null"
+		"Two / by Dabrye was null"
+		"World by Ahnnu was null"
+		"Rappe by The Alchemist was null"
+		"The O by Ray Parker, Jr. was null"
+		"Sweet by Allen Toussaint was null"
+		"The N by The Natural Four was null"
+		"Torii by Osamu Kitajima was null"
+		"Popst by Prefuse 73 was null"
+		"Natsu by Yuni Mori was null"
+		"ネオ・ヒス by Junko Ohashi was null"
+		"Colla by R+R=NOW was null"
+		"24 :  by HYUKOH was null"
+		"Robin by Zhenya Strigalev was null"
+		"Gathe by RighteousGIRLS was null"
+		"Acid  by Various Artists was null"
+		"Like  by Asal Hazel was null"
+		"Bread by The Alchemist was null"
+		"Rio G by Delroy Edwards was null"
+		"Copin by Taeko Onuki was null"
+		"Live  by Various Artists was null"
+		"Home  by Star Slinger was null"
+		"Kauli by Knxwledge was null"
+		"Lyon by Devonwho was null"
+		"Yeste by The Spinners was null"
+		"White by Action Bronson was null"
+		"Plant by Susumu Yokota was null"
+		"Knigh by Gladys Knight & The Pips was null"
+		"Tokay by Tokayo was null"
+		"The U by Wayne Shorter was null"
+		"The S by Trent Reznor and Atticus Ross was null"
+		"Tonig by Sam Wilkes was null"
+		"Gamma by Great Dane was null"
+		"Starg by Ras G was null"
+		"Bop by Swarvy was null"
+		"FULL- by Ahwlee was null"
+		"HazyM by DJ Harrison was null"
+		"Give  by Ben FM was null"
+		"Zephy by NIKI was null"
+		"elect by Busdriver was null"
+		"THEEM by Sam Gendel was null"
+		"SATUR by BROCKHAMPTON was null"
+		"Afrik by Sir Froderick was null"
+		"La Na by Givenchy was null"
+		"Teari by Nathaniel Rateliff & The Night Sweats was null"
+		"Cold  by Drakeo the Ruler was null"
+		"Mr Fi by Vulfpeck was null"
+		"COGNI by Yokaze was null"
+		"Class by Various Artists was null"
+		"DC4 by Meek Mill was null"
+		"You'r by Charles Wright & The Watts 103rd Street Rhythm Band was null"
+		"Nowhe by Knowmadic was null"
+		"Odyss by Nohidea was null"
+		"Tales by BluntOne was null"
+		"Confe by Jinsang was null"
+		"A Cha by TTNG was null"
+		"Kpm 1 by Various Artists was null"
+		"The R by Various Artists was null"
+		"Drama by Alan Tew was null"
+		"The C by Bill Evans Trio was null"
+		"The G by The Alchemist was null"
+		"Late  by Jon Hopkins was null"
+		"Schem by Dibia$E was null"
+		"Baker by Dibia$E was null"
+		"Float by Slow Magic was null"
+		"This  by Scott Colley was null"
+		"One M by Paper Son was null"
+		"Echo  by Various Artists was null"
+		"Black by The Spaceape was null"
+		"Value by Jiggs Whigham was null"
+		"Samba by Jorge Ben Jor was null"
+		"Gears by Johnny "Hammond" Smith was null"
+		"The I by Bob Brookmeyer & Bill Evans was null"
+		"osho by Nohidea was null"
+		"Daddy by Dexter Gordon Quartet was null"
+		"L'art by Anezo-Bouillhol was null"
+		"Kauli by Knxwledge was null"
+		"Surro by Anatole was null"
+		"Rachm by Sergei Rachmaninoff was null"
+		"New Y by Warne Marsh was null"
+		"Needs by Giraffage was null"
+		"Comfo by Giraffage was null"
+		"A Let by George Cables was null"
+		"Lost by Marcus Printup was null"
+		"Eddie by Eddie "Lockjaw" Davis & Sonny Stitt was null"
+		"Chamb by Ahmad Jamal was null"
+
+
+
+
+
+
+
+
+
+---------------------------
+=========All Steps=========
+---------------------------
+
+------Discogs Masters Prep------
+1.  download discogs file (1.5 GB)
+2.  split 
+3.  fix XML syntax (prepend and append)
+4.  xml2json
+5.  mongoimport
+6.  aggregate pipeline
+
+------Spotipy Saved Albums------
+7.  spotipy: retrieve albums (JSON)
+8.  mongoimport
+9.  aggregate pipeline
+
+---------merge---------
+10. mongo script
+
+
+
+var recent_electronic = db.electronic.find({"items.added_at": { $gte: "2019-05-01T00:00:00Z"}})
+
+
+(insert open.spotify link)
+----------------------------
+=======MONGO SCRIPT 4=======
+----------------------------
+use discogs_masters;
+db.albums_export_dump.find().forEach(function(document){
+	if (document.items.album.genres.length != 0) {
+		var id = document._id
+		var artist = document.items.album.artists[0].name;
+		var album  = document.items.album.name;
+		if (album.length >= 5){
+			album = album.substring(0,5)
+		}
+		
+		var discogs_doc = db.all_masters_final.findOne({"masters.master.artists.artist.name":  {$regex: artist, $options: "i" }, "masters.master.title": {$regex: album, $options: "i" }});
+		if (discogs_doc != null) {
+			if (typeof discogs_doc.masters.master.styles !== "undefined" && typeof discogs_doc.masters.master.genres !== "undefined"){
+				var genres = discogs_doc.masters.master.genres.genre;
+				var styles = discogs_doc.masters.master.styles.style;
+				document.items.album.genres = genres;
+				document.items.album.styles = styles;
+			}
+			var year   = discogs_doc.masters.master.year;
+			document.items.album.release_year = year;
+			db.albums_export_dump.update( {"_id": id}  , document)
+		} else {
+			print(album + " by " + artist + " was null");
+		}
+
+	}
+})
+
+
