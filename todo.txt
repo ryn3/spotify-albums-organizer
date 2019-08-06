@@ -1,0 +1,15 @@
+0. Discogs - Python Client for search??
+
+1. Dependencies Documentation (.travis, DEPENDENCIES)
+
+2. Licensing Documentation (MIT)
+
+3. Build Status?
+
+4. Modify comments
+
+5. Examples Documentation
+
+6. .sh -> .py
+
+7. remove JSON and XML masters after import?
