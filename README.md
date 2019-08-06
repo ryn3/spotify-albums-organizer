@@ -18,7 +18,7 @@ The Mongo database uses localhost: 27017
 
 ## Usage
 
-### 1. Import album data:
+### 1. Import album data
 
 	$ chmod +x run.sh
 	$ ./run.sh [spotify-id] [discogs-masters-xml-file]

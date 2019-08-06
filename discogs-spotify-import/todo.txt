@@ -1,15 +1,12 @@
 0. Discogs - Python Client for search??
 
 1. Dependencies Documentation (.travis, DEPENDENCIES)
+	setup.py
 
 2. Licensing Documentation (MIT)
 
-3. Build Status?
+3. Modify comments
 
-4. Modify comments
+4. Examples Documentation
 
-5. Examples Documentation
-
-6. .sh -> .py
-
-7. remove JSON and XML masters after import?
+5. remove JSON and XML masters after import?
