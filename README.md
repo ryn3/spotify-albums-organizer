@@ -1,6 +1,6 @@
 # Saved Spotify Albums Organizer
 
-![GUI example](https://raw.githubusercontent.com/savoy1211/spotify-albums-organizer/master/display_example.png)
+![GUI example](https://raw.githubusercontent.com/savoy1211/spotify-albums-organizer/master/display_example.png?token=AGCPCLKM6G64WFEGM3GB2525JHG7S)
 
 This app lets you organize and visualize your saved Spotify albums. You can sort by genre, year, date added, etc.
 
