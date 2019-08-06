@@ -1,5 +1,7 @@
 # Saved Spotify Albums Organizer
 
+![alt text](https://raw.githubusercontent.com/savoy1211/spotify-albums-organizer/master/display_example.png)
+
 This app lets you organize and visualize your saved Spotify albums. You can sort by genre, year, date added, etc.
 
 Import your saved albums from Spotify and the monthly Discogs masters data -- ~1.5GB -- into MongoDB. Since Spotify data lacks information about genre and subgenres (styles), discogs-spotify-import retrieves genre and subgenre data from the Discogs library and updates the Spotify data. 
