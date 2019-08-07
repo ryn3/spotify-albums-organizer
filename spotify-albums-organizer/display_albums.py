@@ -51,6 +51,23 @@ param = input("choose sorting option([release_year], [name], [artists[0].name], 
 sort_option = "items.album."+param
 direction = input("choose direction([ascending], [descending]): ")
 
+"""
+	Check if release_year type is string. Update if necessary.
+
+"""
+albums = db.current_albums.find()
+for album in albums:
+	try:
+		id = album["_id"]
+		year = album["items"]["album"]["release_year"]
+		year = str(year)
+		album["items"]["album"]["release_year"] = year
+		# str(album["items"]["album"]["release_year"])
+		db.current_albums.update({"_id": id}, album)
+	except Exception:
+		j = 0
+
+
 select_albums = 0
 if (direction == "ascending" and genre != 'all'):
 	select_albums = db.current_albums.find({"items.album.genres": genre}).sort(sort_option, pymongo.ASCENDING)
