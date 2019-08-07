@@ -1,3 +1,7 @@
+"""
+	Prints albums (album title and artist) with empty genre data.
+
+"""
 import pymongo
 
 client = pymongo.MongoClient("localhost", 27017)

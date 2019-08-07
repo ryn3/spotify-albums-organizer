@@ -1,3 +1,8 @@
+"""
+	Update album data by searching with Discogs Python client.
+
+"""
+
 import pymongo
 import discogs_client
 
