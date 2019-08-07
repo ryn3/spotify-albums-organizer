@@ -44,6 +44,7 @@ The Mongo database uses localhost: 27017
 
 #### Example: 
 
+#####`clean_data.py`
 	$ python clean_data.py
 	$ Enter album name: Moondog
 	$ Title: Moondog
@@ -55,10 +56,36 @@ The Mongo database uses localhost: 27017
 	$ Select parameter to update ([label], [release_year], [genres], [styles], exit): label
 	$ label: CBS
 
+#####`show_empty_genre_albums.py`
+	1. title: Mr Finish Line
+	   artist: Vulfpeck
+	2. title: COGNITIO
+	   artist: Yokaze
+	3. title: Rhapsody In White (Reissue)
+	   artist: The Love Unlimited Orchestra
+
+#####`discogs_search_update.py`
+	$ python discogs_search_update.py
+	enter album to search in Discogs: Rhapsody In White
+	Here is the current data: 
+	label: Mercury Records
+	year: 1998
+	genres: []
+	styles: []
+
+	Is this the correct data [y/n]? n
+	artist: Love Unlimited Orchestra
+	label: 20th Century Records
+	year: 1974
+	genres: ['Jazz', 'Funk / Soul']
+	styles: ['Soul-Jazz', 'Jazz-Funk', 'Soul', 'Disco']
+	Is this the correct data [y/n]? y
+
 ### 4. Display saved Spotify albums
 
 #### Example:
 
+#####`display_albums.py`
 	$ python display_albums.py
 	$ Input is case-sensitive!
 	$ choose genre([Electronic], [Jazz], [Rock], [Classical], [Funk / Soul], [Hip Hop], all): Jazz
