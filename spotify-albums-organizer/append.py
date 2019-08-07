@@ -1,3 +1,8 @@
+"""
+	Makes each XML partition into XML syntax. Appends and prepends 'masters' tags. 
+
+"""
+
 import os.path
 from xml.etree import ElementTree as ET
 

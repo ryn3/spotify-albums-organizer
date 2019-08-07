@@ -1,4 +1,4 @@
 ./remove_saved_albums.sh
 ./remove_masters_data.sh
 
-mongo < scripts/remove.js
+mongo < remove_all_collections.js

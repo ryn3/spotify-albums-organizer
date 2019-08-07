@@ -1,11 +1,21 @@
+"""
+	Cleans album data by updating parameters (label, release year, genres, styles).
+
+"""
+
 import os
 import pymongo
 from sys import stdout
 
 class cleanData:
 
-	def inputParam(parameter, document):
-		# print(parameter)
+	def inputParam(parameter,document):
+		"""
+			return updated document
+
+			param: album parameter data such as genres, styles, and label
+	
+		"""
 		if (parameter == "genres" or parameter == "styles"):
 			genres_array = input("How many "+parameter+"? ")
 			if (int(genres_array) > 1):
@@ -22,14 +32,11 @@ class cleanData:
 			genre = input(parameter+": ")
 			document["items"]["album"][parameter] = genre
 
-		# return document
-
+		return document
 
 
 	client = pymongo.MongoClient("localhost", 27017)
 	db = client.discogs_masters
-
-	# use discogs_masters
 
 	next_album = ''
 	while(next_album != "n"):

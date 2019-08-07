@@ -1,1 +1,1 @@
-mongo < scripts/genres.js
+mongo < genres.js

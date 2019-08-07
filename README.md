@@ -24,18 +24,18 @@ The Mongo database uses localhost: 27017
 ## Usage
 
 ### 1. Import album data
-
+	
+	$ cd spotify-albums-organizer
 	$ chmod +x run.sh
 	$ ./run.sh [spotify-id] [discogs-masters-xml-file]
 
 * Find your Spotify id on your browser's tab when you go to <https://open.spotify.com/settings/account>
-* Download the XML Discogs masters data into the local directory from <https://discogs-data.s3-us-west-2.amazonaws.com/data/2019/discogs_20190701_masters.xml.gz>. Importing others may be buggy. 
+* Download the XML Discogs masters data into the spotify-albums-organizer directory from <https://discogs-data.s3-us-west-2.amazonaws.com/data/2019/discogs_20190701_masters.xml.gz>. Importing others may be buggy. 
 
 **This will take some time. On my 2015 MacBook Air, this step took ~1hr.**
 
 ### 2. Import album cover images
 	
-	$ cd scripts
 	$ python import_images.py
 
 ### 3. Clean data
@@ -43,7 +43,7 @@ The Mongo database uses localhost: 27017
 **There will likely be incomplete album data.** Consider cleaning your data for more accurate data (i.e release year, label, etc.):
 
 #### Example: 
-	$ cd scripts
+
 	$ python clean_data.py
 	$ Enter album name: Moondog
 	$ Title: Moondog
@@ -59,7 +59,6 @@ The Mongo database uses localhost: 27017
 
 #### Example:
 
-	$ cd scripts
 	$ python display_albums.py
 	$ Input is case-sensitive!
 	$ choose genre([Electronic], [Jazz], [Rock], [Classical], [Funk / Soul], [Hip Hop], all): Jazz

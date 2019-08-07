@@ -1,4 +1,7 @@
-#converts user's saved albums to json
+"""
+    Retrieves saved Spotify albums as JSON. 
+
+"""
 
 import pprint
 import sys
@@ -6,9 +9,6 @@ import json
 import spotipy
 import spotipy.util as util
 import os.path
-
-
-# import simplejson as json
 
 if len(sys.argv) > 1:
     username = sys.argv[1]
@@ -27,8 +27,6 @@ if token:
     jsone = json.JSONEncoder()
     for i in range(0,j):
 	    results = sp.current_user_saved_albums(limit=50,offset=(50*i))
-	    # results = jsone.encode(results)
-	    # print(results)
 	    file_name = "album_data" + str(i) + ".json"
 	    save_path = 'data/saved_albums/'
 	    completeName = os.path.join(save_path, file_name)

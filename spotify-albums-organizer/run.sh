@@ -1,3 +1,4 @@
-./scripts/import_saved_albums.sh $1
-./scripts/import_discogs_masters.sh $2 
-./scripts/search_masters.sh
+./import_saved_albums.sh $1
+./import_discogs_masters.sh $2 
+./search_masters.sh
+./remove_masters_data.sh
