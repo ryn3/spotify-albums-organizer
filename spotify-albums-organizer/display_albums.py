@@ -137,31 +137,35 @@ for r in range(a):
 	for c in range(cols):
 		try:
 			filename = ids[i]
-			img = ImageTk.PhotoImage(Image.open("../data/images/"+filename).resize((150, 150), Image.ANTIALIAS))
+			img = ImageTk.PhotoImage(Image.open("data/images/"+filename).resize((150, 150), Image.ANTIALIAS))
 			photos.append(img)
 			name = truncate(names[i])
 			artist = truncate(artists[i])
 			label = truncate(labels[i])
 			url = urls[i]
+			query = str(artist +" "+ name)
+			query = query.replace(" ","+")
+			search_url_RYM	   = "https://rateyourmusic.com/search?searchtype=l&searchterm="+query
+			search_url_discogs = "https://www.discogs.com/search/?q="+query+"&type=master"
+
 
 			"""
 				Display album image. Hyperlink to album's Spotify page.
 			
 			"""
-			tk.Button(frame,image=photos[i], borderwidth=10 ,command=partial(go_to, url)).grid(row=4*r,column=c)
+			tk.Button(frame,image=photos[i], borderwidth=10 ,command=partial(go_to, url)).grid(row=6*r,column=c)
 			
 			"""
 				Display album name and artist.
 			
 			"""
-			tk.Label(frame, text=str(artist)).grid(row=(4*r)+1, column=c)
-			tk.Label(frame, text=str(name)).grid(row=(4*r)+2, column=c)
+			tk.Label(frame, text=str(artist)).grid(row=(6*r)+1, column=c)
+			tk.Label(frame, text=str(name)).grid(row=(6*r)+2, column=c)
 			
 			"""
 				Display album ObjectId (selectable)
 
 			"""
-			
 			# v = tk.StringVar()
 			# w = tk.Entry(frame,textvariable=v,fg="black",bg="white",bd=0,state="readonly").grid(row=(4*r)+1, column=c)
 			# v.set(object_ids[i])
@@ -170,14 +174,15 @@ for r in range(a):
 				Display album label and year.
 			
 			"""
-			tk.Label(frame, text=str(label[:13])+", " +years[i]).grid(row=(4*r)+3, column=c)
+			tk.Label(frame, text=str(label[:13])+", " +years[i]).grid(row=(6*r)+3, column=c)
 
 			"""
-				Display album year.
-			
+				Add RYM and Discgos search buttons
+
 			"""
-			# tk.Label(frame, text=str(years[i])).grid(row=(4*r)+3, column=c)
-			
+			tk.Button(frame,text="Search Discogs", command=partial(go_to, search_url_discogs)).grid(row=(6*r)+4,column=c)
+			tk.Button(frame,text="Search RYM", command=partial(go_to, search_url_RYM)).grid(row=(6*r)+5,column=c)
+
 			i+=1
 
 			"""
