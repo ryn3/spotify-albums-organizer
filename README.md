@@ -1,4 +1,4 @@
-# Saved Spotify Albums Organizer
+# Spotify Albums Organizer
 
 ![GUI example](https://raw.githubusercontent.com/savoy1211/spotify-albums-organizer/master/display_covers.png)
 
