@@ -34,6 +34,18 @@ The Mongo database uses localhost: 27017
 
 **This will take some time. On my 2015 MacBook Air, this step took ~1hr.**
 
+### 1.5 Import album data (quick)
+
+Alternatively, search Discogs data using Discogs' Python client. This bypasses adding the masters data into Mongo.
+
+	$ cd spotify-albums-organizer
+	$ chmod +x run_quicker.sh
+	$ ./run_quicker.sh [spotify-id]
+
+Or, if saved Spotify albums already exist in Mongo:
+
+	$ python get_genres.py
+
 ### 2. Import album cover images
 	
 	$ python import_images.py
