@@ -44,7 +44,7 @@ The Mongo database uses localhost: 27017
 
 #### Example: 
 
-####`clean_data.py`
+`clean_data.py`
 	$ python clean_data.py
 	$ Enter album name: Moondog
 	$ Title: Moondog
@@ -56,7 +56,7 @@ The Mongo database uses localhost: 27017
 	$ Select parameter to update ([label], [release_year], [genres], [styles], exit): label
 	$ label: CBS
 
-####`show_empty_genre_albums.py`
+`show_empty_genre_albums.py`
 	1. title: Mr Finish Line
 	   artist: Vulfpeck
 	2. title: COGNITIO
@@ -64,7 +64,7 @@ The Mongo database uses localhost: 27017
 	3. title: Rhapsody In White (Reissue)
 	   artist: The Love Unlimited Orchestra
 
-####`discogs_search_update.py`
+`discogs_search_update.py`
 	$ python discogs_search_update.py
 	enter album to search in Discogs: Rhapsody In White
 	Here is the current data: 
@@ -85,7 +85,7 @@ The Mongo database uses localhost: 27017
 
 #### Example:
 
-####`display_albums.py`
+`display_albums.py`
 	$ python display_albums.py
 	$ Input is case-sensitive!
 	$ choose genre([Electronic], [Jazz], [Rock], [Classical], [Funk / Soul], [Hip Hop], all): Jazz
