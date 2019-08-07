@@ -44,7 +44,8 @@ The Mongo database uses localhost: 27017
 
 #### Example: 
 
-`clean_data.py` Cleans album data by updating parameters (label, release year, genres, styles).
+`clean_data.py` 
+Cleans album data by updating parameters (label, release year, genres, styles).
 
 	$ python clean_data.py
 	$ Enter album name: Moondog
@@ -57,7 +58,8 @@ The Mongo database uses localhost: 27017
 	$ Select parameter to update ([label], [release_year], [genres], [styles], exit): label
 	$ label: CBS
 
-`show_empty_genre_albums.py` Prints albums (album title and artist) with empty genre data.
+`show_empty_genre_albums.py` 
+Prints albums (album title and artist) with empty genre data.
 
 	$ python show_empty_genre_albums.py
 	1. title: Mr Finish Line
@@ -67,7 +69,8 @@ The Mongo database uses localhost: 27017
 	3. title: Rhapsody In White (Reissue)
 	   artist: The Love Unlimited Orchestra
 
-`discogs_search_update.py` Update album data by searching with Discogs Python client.
+`discogs_search_update.py` 
+Update album data by searching with Discogs Python client.
 
 	$ python discogs_search_update.py
 	enter album to search in Discogs: Rhapsody In White
@@ -89,7 +92,8 @@ The Mongo database uses localhost: 27017
 
 #### Example:
 
-`display_albums.py` Displays saved Spotify albums in a GUI. Click on an album cover to open album's Spotify page.
+`display_albums.py` 
+Displays saved Spotify albums in a GUI. Click on an album cover to open album's Spotify page.
 
 	$ python display_albums.py
 	$ Input is case-sensitive!
