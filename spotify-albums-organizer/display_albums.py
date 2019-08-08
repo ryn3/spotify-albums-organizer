@@ -53,7 +53,8 @@ direction = input("choose direction([ascending], [descending]): ")
 
 """
 	Check if release_year type is string. Update if necessary.
-
+	Capitalize artist name for sort.
+	
 """
 albums = db.current_albums.find()
 for album in albums:
@@ -62,14 +63,22 @@ for album in albums:
 		year = album["items"]["album"]["release_year"]
 		year = str(year)
 		album["items"]["album"]["release_year"] = year
-		# str(album["items"]["album"]["release_year"])
+# 		album["items"]["album"]["artists"][0]["name"] = album["items"]["album"]["artists"][0]["name"].capitalize()
 		db.current_albums.update({"_id": id}, album)
 	except Exception:
 		j = 0
 
 
 select_albums = 0
-if (direction == "ascending" and genre != 'all'):
+if (direction == "ascending" and param == 'artists.name'):
+	select_albums = db.current_albums.find({"items.album.genres": genre}).sort([(sort_option, pymongo.ASCENDING), ("items.album.release_year", pymongo.DESCENDING)])
+elif (direction == "descending" and param == 'artists.name'):
+	select_albums = db.current_albums.find({"items.album.genres": genre}).sort([(sort_option, pymongo.ASCENDING), ("items.album.release_year", pymongo.DESCENDING)])
+elif (direction == "ascending" and param == 'label'):
+	select_albums = db.current_albums.find({"items.album.genres": genre}).sort([(sort_option, pymongo.ASCENDING), ("items.album.release_year", pymongo.DESCENDING)])
+elif (direction == "descending" and param == 'label'):
+	select_albums = db.current_albums.find({"items.album.genres": genre}).sort([(sort_option, pymongo.ASCENDING), ("items.album.release_year", pymongo.DESCENDING)])
+elif (direction == "ascending" and genre != 'all'):
 	select_albums = db.current_albums.find({"items.album.genres": genre}).sort(sort_option, pymongo.ASCENDING)
 elif (direction == "descending" and genre != 'all'):
 	select_albums = db.current_albums.find({"items.album.genres": genre}).sort(sort_option, pymongo.DESCENDING)
