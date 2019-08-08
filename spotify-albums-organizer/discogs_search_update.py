@@ -10,7 +10,7 @@ client = pymongo.MongoClient("localhost", 27017)
 db = client.discogs_masters
 current_albums = db.current_albums
 
-d = discogs_client.Client('discogs-spotify/0.1', user_token="dWWIJonGNxkDNGsIbncBUtkMMBMygBoGIqbWeQcu")
+d = discogs_client.Client('discogs-spotify/0.1', user_token="VhFxDZnEzFcBLdTCSnsGfAmxgHmCOYxXMSdbOHci")
 
 while True:
 	title = input("enter album title from db.current_albums: ")
