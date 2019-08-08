@@ -7,7 +7,7 @@ from sys import stdout
 
 client = pymongo.MongoClient("localhost", 27017)
 db = client.discogs_masters2
-d = discogs_client.Client('discogs-spotify/0.1', user_token="dWWIJonGNxkDNGsIbncBUtkMMBMygBoGIqbWeQcu")
+d = discogs_client.Client('discogs-spotify/0.1', user_token="VhFxDZnEzFcBLdTCSnsGfAmxgHmCOYxXMSdbOHci")
 
 total_albums = db.current_albums.count()
 i = 1
