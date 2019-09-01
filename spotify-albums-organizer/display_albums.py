@@ -123,10 +123,10 @@ for album in select_albums:
 	except Exception:
 		print(album["items"]["album"]["name"]+" doesn't work.")
 
-"""
-	Create tkinter canvas
-
-"""
+#"""
+#	Create tkinter canvas
+#
+#"""
 root = tk.Tk()
 canvas = tk.Canvas(root, borderwidth=0, background="#ffffff", width=1440, height=800)
 frame = tk.Frame(canvas, background="#ffffff")
@@ -157,17 +157,20 @@ for r in range(a):
 			search_url_RYM	   = "https://rateyourmusic.com/search?searchtype=l&searchterm="+query
 			search_url_discogs = "https://www.discogs.com/search/?q="+query+"&type=master"
 
-
-			"""
-				Display album image. Hyperlink to album's Spotify page.
-			
-			"""
-			tk.Button(frame,image=photos[i], borderwidth=10 ,command=partial(go_to, url)).grid(row=6*r,column=c)
+#			"""
+#				Display album image. Hyperlink to album's Spotify page.
+#			
+#			"""
+			tk.Button(frame,image=photos[i] ,command=partial(go_to, url)).grid(row=6*r,column=c)
 			
 			"""
 				Display album name and artist.
 			
 			"""
+#			print()
+#			print(artist)
+#			print(name)
+
 			tk.Label(frame, text=str(artist)).grid(row=(6*r)+1, column=c)
 			tk.Label(frame, text=str(name)).grid(row=(6*r)+2, column=c)
 			
@@ -183,12 +186,18 @@ for r in range(a):
 				Display album label and year.
 			
 			"""
+#			print(label)
+#			print(years[i])
 			tk.Label(frame, text=str(label[:13])+", " +years[i]).grid(row=(6*r)+3, column=c)
 
 			"""
 				Add RYM and Discgos search buttons
 
 			"""
+#			print(search_url_discogs)
+#			print(search_url_RYM)
+#			print()
+			
 			tk.Button(frame,text="Search Discogs", command=partial(go_to, search_url_discogs)).grid(row=(6*r)+4,column=c)
 			tk.Button(frame,text="Search RYM", command=partial(go_to, search_url_RYM)).grid(row=(6*r)+5,column=c)
 
