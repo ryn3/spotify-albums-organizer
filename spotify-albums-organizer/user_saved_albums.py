@@ -20,9 +20,10 @@ scope = 'user-library-read'
 token = util.prompt_for_user_token(username, scope)
 
 if token:
+    print("OL'YELLER")
     sp = spotipy.Spotify(auth=token)
     sp.trace = False
-    saved_albums = str(sp.current_user_saved_albums(limit=15))
+    saved_albums = str(sp.current_user_saved_albums(limit=50))
     j = int(int(saved_albums[saved_albums.rfind(' ')+1:len(saved_albums)-1])/50)+1 #total saved albums
     jsone = json.JSONEncoder()
     for i in range(0,j):
