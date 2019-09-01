@@ -1,10 +1,12 @@
+mkdir data/masters/XML
+mkdir data/masters/JSON
 split -l 3000 $1 data/masters/XML/partition_
 
-python append.py
+python3 append.py
 
 dir="data/masters/XML"
 for f in "$dir"/*; do
-  python xml2json.py -t xml2json -o $f".json" "$f"
+  python3 xml2json.py -t xml2json -o $f".json" "$f"
   mv $f".json" data/masters/JSON
 done
 
