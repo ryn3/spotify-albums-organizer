@@ -3,7 +3,10 @@ mkdir data/masters/XML
 mkdir data/masters/JSON
 split -l 3000 $1 data/masters/XML/partition_
 
-python3 append.py
+dir="data/masters/XML"
+for f in "$dir"/*; do
+  vim "+source tagify.vim" "$f"
+done
 
 dir="data/masters/XML"
 for f in "$dir"/*; do
