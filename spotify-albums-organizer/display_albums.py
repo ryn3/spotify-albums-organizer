@@ -129,7 +129,7 @@ for album in select_albums:
 #"""
 root = tk.Tk()
 canvas = tk.Canvas(root, borderwidth=0, background="#ffffff", width=1440, height=800)
-frame = tk.Frame(canvas, background="#ffffff")
+frame = tk.Frame(canvas, background="#f8f8ff")
 vsb = tk.Scrollbar(root, orient="vertical", command=canvas.yview)
 canvas.configure(yscrollcommand=vsb.set)
 vsb.pack(side="right", fill="y")
@@ -154,8 +154,8 @@ for r in range(a):
 			url = urls[i]
 			query = str(artist +" "+ name)
 			query = query.replace(" ","+")
-			search_url_RYM	   = "https://rateyourmusic.com/search?searchtype=l&searchterm="+query
-			search_url_discogs = "https://www.discogs.com/search/?q="+query+"&type=master"
+			search_url_RYM	   = "https://rateyourmusic.com/search?searchtype=l"+'"&"'+"searchterm="+query
+			search_url_discogs = "https://www.discogs.com/search/?q="+query+'"&"'+"type=master"
 
 #			"""
 #				Display album image. Hyperlink to album's Spotify page.
@@ -211,7 +211,7 @@ for r in range(a):
 			stdout.write("\rLoading %d" % i +denom+" albums...")
 			stdout.flush()
 
-		except IndexError:
+		except Exception:
 			break
 
 stdout.write("\n")
