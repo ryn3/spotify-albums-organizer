@@ -1,4 +1,3 @@
-<masters>
 let first = getline(1)
 if first !~ '<masters>'
     execute 'normal! gg'
@@ -13,4 +12,3 @@ if last !~ '</masters>'
     execute 'normal! I</masters>'
 endif
 execute "wq"
-</masters>
