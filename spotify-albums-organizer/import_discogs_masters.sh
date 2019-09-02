@@ -1,3 +1,4 @@
+mkdir data/masters
 mkdir data/masters/XML
 mkdir data/masters/JSON
 split -l 3000 $1 data/masters/XML/partition_
