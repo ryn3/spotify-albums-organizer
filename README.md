@@ -34,9 +34,9 @@ The Mongo database uses localhost: 27017
 
 **This will take some time. On my 2015 MacBook Air, this step took ~1hr.**
 
-### 1.5 Import album data (quick)
+### 1.5 Import album data
 
-Alternatively, search Discogs data using Discogs' Python client. This bypasses adding the masters data into Mongo.
+Additionally, search Discogs data using Discogs' Python client. This bypasses adding the masters data into Mongo.
 
 	$ cd spotify-albums-organizer
 	$ chmod +x run_quicker.sh
@@ -127,6 +127,4 @@ If you want to update your saved album data (after you've added or deleted any s
 	$ chmod +x update_saved_albums.sh
 	$ ./update_saved_albums.sh [spotify-id]
 
-## Note
 
-Allow for around 5GB of free space before running this app. 
