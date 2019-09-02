@@ -19,7 +19,7 @@ The Mongo database uses localhost: 27017
 
 ## Dependencies
 
-	$ pip3 install -r REQUIREMENTS
+	$ pip3 install -r requirements.txt
 
 ## Usage
 
