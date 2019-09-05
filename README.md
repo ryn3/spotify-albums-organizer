@@ -109,7 +109,8 @@ Update album data by searching with Discogs Python client.
 
 #### `display_albums.py`
 
-Displays saved Spotify albums in a GUI. Click on an album cover to open album's Spotify page. The search buttons allow you to query the artist name and album title in the Discogs or RateYourMusic search bars.
+For the windows users, if you haven't already, make sure you are running XMing. This method displays saved Spotify albums in a GUI. Click on an album cover to open album's Spotify page. The search buttons allow you to query the artist name and album title in the Discogs or RateYourMusic search bars.
+	
 	$ export DISPLAY=:0;
 	$ python3 display_albums.py
 	$ Input is case-sensitive!
